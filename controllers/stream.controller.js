@@ -151,26 +151,32 @@ exports.createStream = async (req, res) => {
 
     /* ===== 6. WAIT UNTIL ACTIVE ===== */
     await waitForStreamActive(youtube, streamId);
+    
+    
+    // 🔥 EXTRA WAIT (VERY IMPORTANT)
+    await new Promise((r) => setTimeout(r, 10000)); 
 
     /* ===== 7. TRANSITION TO TESTING ===== */
-    await youtube.liveBroadcasts.transition({
+
+      await youtube.liveBroadcasts.transition({
       part: "status",
       id: broadcastId,
       broadcastStatus: "testing",
     });
 
-    console.log("🧪 TESTING");
+    console.log("🧪 TESTING MODE");
 
-    await new Promise((r) => setTimeout(r, 5000));
+    // wait again
+    await new Promise((r) => setTimeout(r, 10000));
 
-    /* ===== 8. GO LIVE ===== */
+    /* ===== TO LIVE ===== */
     await youtube.liveBroadcasts.transition({
       part: "status",
       id: broadcastId,
       broadcastStatus: "live",
     });
 
-    console.log("🔥 LIVE NOW");
+    console.log("🔥 NOW LIVE");
 
     /* ===== SAVE DB ===== */
     await Stream.create({
