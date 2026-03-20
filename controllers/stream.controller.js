@@ -116,12 +116,12 @@ exports.createStream = async (req, res) => {
     await download(thumbUrl, tempThumb);
 
     /* ===== SET THUMBNAIL ===== */
-    await youtube.thumbnails.set({
-      videoId: broadcastId,
-      media: {
-        body: fs.createReadStream(tempThumb),
-      },
-    });
+    // await youtube.thumbnails.set({
+    //   videoId: broadcastId,
+    //   media: {
+    //     body: fs.createReadStream(tempThumb),
+    //   },
+    // });
 
     /* ===== 5. START FFMPEG ===== */
     console.log("🚀 Starting FFmpeg...");
